@@ -22,7 +22,7 @@ int get_next_or_create(int nd, char c) {
 void build(vector<string> t) {
   mem.reserve(1e6 + 100);mem.clear();
   mem.emplace_back();
-  // 0th element is nullptr, 1st is the root
+  // -1st element is nullptr, 0th is the root
   for (int j = 0; j < t.size(); ++j) {
     int cur = 0;
     for (char c : t[j]) cur = get_next_or_create(cur, c);

@@ -74,3 +74,4 @@ pair<int, vector<int>> solve(int n, vector<edge> ed, int s, bool recover) {
   for (int i = 0; i < n; ++i) go(get(i));
   return {ans, take};
 }
+//534b4e

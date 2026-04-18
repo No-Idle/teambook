@@ -1,9 +1,4 @@
-using edge = array<int, 4>; // {from, to, w, i}
-
-template<typename T, typename C>
-using pq = priority_queue<T, vector<T>, C>;
-
-pair<int, vector<int>> solve(int n, vector<edge> ed, bool recover) {
+pair<int, vector<int>> solve(int n, vector<edge> ed, int s, bool recover) {
   auto cmp = [&](int i, int j) { return ed[i][2] > ed[j][2]; };
   vector r(n, pq<int, decltype(cmp)>(cmp));
   for (auto [u, v, w, i] : ed) r[v].push(i);
@@ -27,7 +22,7 @@ pair<int, vector<int>> solve(int n, vector<edge> ed, bool recover) {
   };
   vector<vector<pair<int, int>>> g(n);
   int ans = 0;
-  color[0] = 2;
+  color[s] = 2;
   auto go = [&](int cur) {
     vector<pair<int, int>> stack;
     int time = 0;
@@ -60,7 +55,7 @@ pair<int, vector<int>> solve(int n, vector<edge> ed, bool recover) {
     if (recover) {
       pq<pair<int, int>, greater<>> d;
       for (auto [x, i] : stack) {
-        d.emplace(x, i);
+        d.emplace(-1, i);
       }
       while (!d.empty()) {
         auto [t, i] = d.top();
@@ -76,7 +71,6 @@ pair<int, vector<int>> solve(int n, vector<edge> ed, bool recover) {
       }
     }
   };
-  for (int i = 1; i < n; ++i) go(get(i));
+  for (int i = 0; i < n; ++i) go(get(i));
   return {ans, take};
 }
-//14d619
